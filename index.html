@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CRM Send Calendar &middot; July 6&ndash;19, 2026</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#e8eaf0;font-family:'Helvetica Neue',Arial,sans-serif;padding:24px 16px 48px;}
+.wrapper{max-width:740px;margin:0 auto;background:#fff;border-radius:6px;overflow:hidden;box-shadow:0 4px 20px rgba(0,10,60,.13);}
+.header{background:#000A3C;padding:28px 32px 22px;}
+.eyebrow{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#98BFFF;margin-bottom:10px;}
+.title{font-size:24px;font-weight:700;color:#fff;letter-spacing:-.01em;}
+.subtitle{font-size:13px;color:#98BFFF;margin-top:5px;}
+.rule{height:2px;background:#005FFF;margin-top:20px;border-radius:1px;}
+.kpi-strip{display:table;width:100%;background:#000A3C;border-bottom:3px solid #001a6e;}
+.kpi-cell{display:table-cell;padding:16px 0 18px;border-right:1px solid #001a6e;text-align:center;}
+.kpi-cell:last-child{border-right:none;}
+.kpi-num{font-size:26px;font-weight:700;color:#fff;line-height:1;}
+.kpi-num.accent{color:#FFD300;}
+.kpi-label{font-size:10px;color:#98BFFF;margin-top:4px;text-transform:uppercase;letter-spacing:.07em;}
+.filter-bar{background:#f5f7ff;border-bottom:1px solid #dde4f8;padding:10px 24px;display:flex;flex-direction:column;gap:8px;}
+.filter-row{display:flex;flex-wrap:wrap;gap:6px;align-items:center;}
+.filter-label{font-size:10px;font-weight:700;color:#000A3C;text-transform:uppercase;letter-spacing:.1em;min-width:52px;}
+.filter-group{display:flex;flex-wrap:wrap;gap:5px;}
+.fb{display:inline-block;padding:4px 10px;border-radius:3px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid #c8d0ee;background:#eef1fa;color:#000A3C;transition:all .15s;user-select:none;}
+.fb:hover{background:#dde4f8;}
+.fb.active{background:#000A3C;color:#fff;border-color:#000A3C;}
+.fb.active-email{background:#005FFF;color:#fff;border-color:#005FFF;}
+.fb.active-push{background:#02D0E5;color:#000A3C;border-color:#02D0E5;}
+.fb.active-amazon{background:#FFD300;color:#000A3C;border-color:#FFD300;}
+.fb.active-redfast{background:#FF008A;color:#fff;border-color:#FF008A;}
+.section-head{padding:12px 24px 10px;border-bottom:1px solid #e8e8ec;display:flex;align-items:baseline;gap:8px;}
+.sh-title{font-size:11px;font-weight:700;color:#000A3C;text-transform:uppercase;letter-spacing:.1em;}
+.sh-count{font-size:13px;font-weight:700;color:#005FFF;}
+.sh-sub{font-size:11px;color:#aaa;margin-left:auto;}
+.day-hd{padding:6px 24px;font-size:10px;font-weight:700;color:#005FFF;text-transform:uppercase;letter-spacing:.1em;background:#f5f7ff;border-top:1px solid #dde4f8;border-bottom:1px solid #dde4f8;display:flex;justify-content:space-between;}
+.day-ct{font-weight:400;color:#98BFFF;}
+.send-row{display:flex;align-items:center;gap:10px;padding:8px 24px;border-bottom:1px solid #f2f2f5;transition:background .1s;}
+.send-row:hover{background:#f8f9ff;}
+.sname{flex:1;font-size:13px;font-weight:500;color:#0a0a28;}
+.region-badge{display:inline-block;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:600;background:#eef1fa;color:#000A3C;white-space:nowrap;}
+.ch{display:inline-block;padding:3px 8px;border-radius:3px;font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;min-width:66px;text-align:center;}
+.ch-email{background:#005FFF;color:#fff;}
+.ch-push{background:#02D0E5;color:#000A3C;}
+.ch-amazon{background:#FFD300;color:#000A3C;}
+.ch-redfast{background:#FF008A;color:#fff;}
+.ch-flag{background:#fff0ed;color:#992200;border:1px solid #f5c0b0;}
+/* Priority badge */
+.pri{display:inline-block;padding:2px 7px;border-radius:3px;font-size:10px;font-weight:600;white-space:nowrap;min-width:74px;text-align:center;}
+.pri-xl  {background:#000A3C;color:#FFD300;}        /* Tentpole (XL) */
+.pri-l   {background:#005FFF;color:#fff;}            /* Priority (L) */
+.pri-m   {background:#d0e4ff;color:#003399;}         /* Moderate (M) */
+.pri-s   {background:#e8f5e8;color:#1a6a1a;}         /* Specialty (S) */
+.pri-prod{background:#f0ede8;color:#444;}            /* Product */
+.pri-tbd {background:#f5f5f5;color:#999;border:1px solid #e0e0e0;}  /* TBD */
+.pri-na  {background:#f5f5f5;color:#bbb;border:1px solid #e0e0e0;}  /* NA */
+.pri-none{color:#ccc;font-size:10px;min-width:74px;text-align:center;display:inline-block;} /* — */
+.empty-state{padding:24px;text-align:center;font-size:13px;color:#aaa;display:none;}
+.footer{background:#000A3C;padding:16px 32px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;}
+.leg{display:flex;gap:12px;flex-wrap:wrap;}
+.li{display:flex;align-items:center;gap:5px;font-size:10px;color:#98BFFF;white-space:nowrap;}
+.ld{width:8px;height:8px;border-radius:2px;flex-shrink:0;}
+.ft{font-size:10px;color:#6070a0;text-align:right;line-height:1.6;}
+</style>
+</head>
+<body>
+<div class="wrapper">
+<div class="header">
+  <div class="eyebrow">Paramount+ &middot; CRM &amp; Digital Marketing</div>
+  <div class="title">Weekly Send Calendar</div>
+  <div class="subtitle">July 6 &ndash; 19, 2026 &middot; All active sends</div>
+  <div class="rule"></div>
+</div>
+<div class="kpi-strip">
+  <div class="kpi-cell"><div class="kpi-num" id="kpi-total">104</div><div class="kpi-label">Campaign sends</div></div>
+  <div class="kpi-cell"><div class="kpi-num" id="kpi-email">31</div><div class="kpi-label">Email</div></div>
+  <div class="kpi-cell"><div class="kpi-num" id="kpi-push">47</div><div class="kpi-label">Push</div></div>
+  <div class="kpi-cell"><div class="kpi-num" id="kpi-amazon">18</div><div class="kpi-label">Amazon</div></div>
+  <div class="kpi-cell"><div class="kpi-num accent" id="kpi-us">22</div><div class="kpi-label">US sends</div></div>
+  <div class="kpi-cell"><div class="kpi-num accent" id="kpi-intl">82</div><div class="kpi-label">INTL sends</div></div>
+</div>
+<div class="filter-bar">
+  <div class="filter-row">
+    <span class="filter-label">Region</span>
+    <div class="filter-group" id="region-filters">
+      <span class="fb active" data-region="ALL">All</span>
+      <span class="fb" data-region="US">US</span>
+      <span class="fb" data-region="AU">AU</span>
+      <span class="fb" data-region="BR">BR</span>
+      <span class="fb" data-region="CA">CA</span>
+      <span class="fb" data-region="FR">FR</span>
+      <span class="fb" data-region="GSA">GSA</span>
+      <span class="fb" data-region="IT">IT</span>
+      <span class="fb" data-region="JP">JP</span>
+      <span class="fb" data-region="LA">LA</span>
+      <span class="fb" data-region="UK">UK</span>
+    </div>
+  </div>
+  <div class="filter-row">
+    <span class="filter-label">Channel</span>
+    <div class="filter-group" id="channel-filters">
+      <span class="fb active" data-channel="ALL">All</span>
+      <span class="fb" data-channel="email">Email</span>
+      <span class="fb" data-channel="push">Push</span>
+      <span class="fb" data-channel="amazon">Amazon</span>
+      <span class="fb" data-channel="redfast">Redfast</span>
+    </div>
+  </div>
+  <div class="filter-row">
+    <span class="filter-label">Priority</span>
+    <div class="filter-group" id="priority-filters">
+      <span class="fb active" data-pri="ALL">All</span>
+      <span class="fb" data-pri="Tentpole (XL)">Tentpole</span>
+      <span class="fb" data-pri="Priority (L)">Priority</span>
+      <span class="fb" data-pri="Moderate (M)">Moderate</span>
+      <span class="fb" data-pri="Specialty (S)">Specialty</span>
+      <span class="fb" data-pri="Product">Product</span>
+    </div>
+  </div>
+</div>
+<div class="section-head">
+  <div class="sh-title">Campaign sends</div>
+  <div class="sh-count" id="sec-count">104</div>
+  <div class="sh-sub">Email &middot; Push &middot; Amazon &middot; Redfast</div>
+</div>
+<div id="campaigns-body"></div>
+<div class="empty-state" id="empty-campaigns">No sends match the current filters.</div>
+<div class="section-head">
+  <div class="sh-title">Ongoing Journeys</div>
+  <div class="sh-count" id="ongoing-count">5</div>
+  <div class="sh-sub">Evergreen &middot; not tied to a single send date</div>
+</div>
+<div id="ongoing-body"></div>
+<div class="footer">
+  <div class="leg">
+    <span class="li"><span class="ld" style="background:#005FFF"></span>Email</span>
+    <span class="li"><span class="ld" style="background:#02D0E5"></span>Push</span>
+    <span class="li"><span class="ld" style="background:#FFD300"></span>Amazon</span>
+    <span class="li"><span class="ld" style="background:#FF008A"></span>Redfast</span>
+    <span class="li"><span class="ld" style="background:#000A3C"></span>Tentpole</span>
+    <span class="li"><span class="ld" style="background:#005FFF"></span>Priority</span>
+    <span class="li"><span class="ld" style="background:#d0e4ff;border:1px solid #aaa"></span>Moderate</span>
+  </div>
+  <div class="ft">Paramount+ CRM &amp; Digital Marketing<br>Week of July 6&ndash;19, 2026</div>
+</div>
+</div>
+<script>
+const CAMPAIGNS=[{"name":"13 World Cup ~ Daily Tune In Pushes ~ 7/06","ch":"Push","ch_type":"push","region":"LA","day":"Monday, July 6","automated":true,"priority":"Tentpole (XL)"},{"name":"Apple BET Migration: How To Login to P+","ch":"Email","ch_type":"email","region":"US","day":"Monday, July 6","automated":true,"priority":""},{"name":"Redfast upgrade offer update - 20% to 50% off for 1 year","ch":"RedFast","ch_type":"redfast","region":"BR","day":"Monday, July 6","automated":true,"priority":""},{"name":"Redfast upgrade offer update - 20% to 50% off for 1 year","ch":"RedFast","ch_type":"redfast","region":"LA","day":"Monday, July 6","automated":true,"priority":""},{"name":"Redfast upgrade offer update - 20% to 50% off for 1 year","ch":"RedFast","ch_type":"redfast","region":"US","day":"Monday, July 6","automated":true,"priority":""},{"name":"UFC 329","ch":"Amazon Email","ch_type":"amazon","region":"BR","day":"Monday, July 6","automated":false,"priority":"Tentpole (XL)"},{"name":"UFC 329","ch":"Amazon Email","ch_type":"amazon","region":"LA","day":"Monday, July 6","automated":false,"priority":"Tentpole (XL)"},{"name":"14 World Cup ~ Daily Tune In Pushes ~ 7/07","ch":"Push","ch_type":"push","region":"LA","day":"Tuesday, July 7","automated":true,"priority":"Tentpole (XL)"},{"name":"UFC 329 Lead Up - Week of Send","ch":"Email","ch_type":"email","region":"US","day":"Tuesday, July 7","automated":true,"priority":"Tentpole (XL)"},{"name":"UFC 329 Lead Up - Week of Send","ch":"Email","ch_type":"email","region":"BR","day":"Tuesday, July 7","automated":true,"priority":"Tentpole (XL)"},{"name":"UFC 329 Lead Up - Week of Send","ch":"Email","ch_type":"email","region":"LA","day":"Tuesday, July 7","automated":true,"priority":"Tentpole (XL)"},{"name":"Upgrade Prompts on Conmebol & UFC Pages","ch":"RedFast","ch_type":"redfast","region":"US","day":"Tuesday, July 7","automated":true,"priority":""},{"name":"Upgrade Prompts on Conmebol & UFC Pages","ch":"RedFast","ch_type":"redfast","region":"LA","day":"Tuesday, July 7","automated":true,"priority":""},{"name":"Upgrade Prompts on Conmebol & UFC Pages","ch":"RedFast","ch_type":"redfast","region":"BR","day":"Tuesday, July 7","automated":true,"priority":""},{"name":"UFC 329 Lead Up","ch":"Push","ch_type":"push","region":"US","day":"Tuesday, July 7","automated":true,"priority":"Tentpole (XL)"},{"name":"UFC 329 Lead Up","ch":"Push","ch_type":"push","region":"BR","day":"Tuesday, July 7","automated":true,"priority":"Tentpole (XL)"},{"name":"UFC 329 Lead Up","ch":"Push","ch_type":"push","region":"LA","day":"Tuesday, July 7","automated":true,"priority":"Tentpole (XL)"},{"name":"Avatar Aang: The Last Airbender Trailer","ch":"Push","ch_type":"push","region":"US","day":"Tuesday, July 7","automated":true,"priority":""},{"name":"UFC 329","ch":"Amazon Email","ch_type":"amazon","region":"AU","day":"Tuesday, July 7","automated":false,"priority":"Tentpole (XL)"},{"name":"Scream 7 (New Movie)","ch":"Email","ch_type":"email","region":"BR","day":"Wednesday, July 8","automated":true,"priority":""},{"name":"Scream 7 (New Movie)","ch":"Email","ch_type":"email","region":"LA","day":"Wednesday, July 8","automated":true,"priority":""},{"name":"Apple BET Migration: Welcome To P+","ch":"Email","ch_type":"email","region":"US","day":"Wednesday, July 8","automated":true,"priority":""},{"name":"Trending Now","ch":"Email","ch_type":"email","region":"CA","day":"Wednesday, July 8","automated":false,"priority":""},{"name":"World Cup ~ Weekly Awareness Emails ~ Quarter Finals","ch":"Email","ch_type":"email","region":"LA","day":"Thursday, July 9","automated":true,"priority":"Tentpole (XL)"},{"name":"15 World Cup ~ Daily Tune In Pushes ~ 7/09","ch":"Push","ch_type":"push","region":"LA","day":"Thursday, July 9","automated":true,"priority":"Tentpole (XL)"},{"name":"R4U","ch":"Email","ch_type":"email","region":"GSA","day":"Thursday, July 9","automated":false,"priority":""},{"name":"R4U","ch":"Email","ch_type":"email","region":"IT","day":"Thursday, July 9","automated":false,"priority":""},{"name":"R4U","ch":"Email","ch_type":"email","region":"FR","day":"Thursday, July 9","automated":false,"priority":""},{"name":"World Cup (Rd 16 Recap & QF Coverage)","ch":"Push","ch_type":"push","region":"US","day":"Thursday, July 9","automated":true,"priority":"Tentpole (XL)"},{"name":"Diarra from Detroit S2 Trailer","ch":"Push","ch_type":"push","region":"US","day":"Thursday, July 9","automated":true,"priority":""},{"name":"Undertone","ch":"Amazon Email","ch_type":"amazon","region":"CA","day":"Thursday, July 9","automated":false,"priority":""},{"name":"The Running Man","ch":"Amazon Email","ch_type":"amazon","region":"IT","day":"Thursday, July 9","automated":false,"priority":""},{"name":"Wild Cherry S1","ch":"Amazon Email","ch_type":"amazon","region":"FR","day":"Thursday, July 9","automated":false,"priority":""},{"name":"Wild Cherry S1","ch":"Amazon Email","ch_type":"amazon","region":"GSA","day":"Thursday, July 9","automated":false,"priority":""},{"name":"Weekly Newsletter","ch":"Email","ch_type":"email","region":"US","day":"Thursday, July 9","automated":true,"priority":""},{"name":"PUSH: ONE MILE","ch":"Push","ch_type":"push","region":"UK","day":"Friday, July 10","automated":true,"priority":""},{"name":"16 World Cup ~ Daily Tune In Pushes ~ 7/10","ch":"Push","ch_type":"push","region":"LA","day":"Friday, July 10","automated":true,"priority":"Tentpole (XL)"},{"name":"Prisoner of War (New Movie)","ch":"Push","ch_type":"push","region":"GSA","day":"Friday, July 10","automated":true,"priority":""},{"name":"Trending Now","ch":"Email","ch_type":"email","region":"UK","day":"Friday, July 10","automated":false,"priority":""},{"name":"Scream 7","ch":"Amazon Email","ch_type":"amazon","region":"BR","day":"Friday, July 10","automated":false,"priority":""},{"name":"Scream 7","ch":"Amazon Email","ch_type":"amazon","region":"LA","day":"Friday, July 10","automated":false,"priority":""},{"name":"One Mile: Chapter One","ch":"Amazon Email","ch_type":"amazon","region":"UK","day":"Friday, July 10","automated":false,"priority":""},{"name":"UFC 329","ch":"Email","ch_type":"email","region":"AU","day":"Friday, July 10","automated":true,"priority":"Tentpole (XL)"},{"name":"PUSH: UNTITLED HOME INVASION ROMANCE","ch":"Push","ch_type":"push","region":"AU","day":"Saturday, July 11","automated":true,"priority":""},{"name":"UFC 329","ch":"Push","ch_type":"push","region":"AU","day":"Saturday, July 11","automated":true,"priority":"Tentpole (XL)"},{"name":"17 World Cup ~ Daily Tune In Pushes ~ 7/11","ch":"Push","ch_type":"push","region":"LA","day":"Saturday, July 11","automated":true,"priority":"Tentpole (XL)"},{"name":"UFC 329 Now Stream - Day of Send","ch":"Email","ch_type":"email","region":"US","day":"Saturday, July 11","automated":true,"priority":"Tentpole (XL)"},{"name":"UFC 329 Now Stream - Day of Send","ch":"Email","ch_type":"email","region":"BR","day":"Saturday, July 11","automated":true,"priority":"Tentpole (XL)"},{"name":"UFC 329 Now Stream - Day of Send","ch":"Email","ch_type":"email","region":"LA","day":"Saturday, July 11","automated":true,"priority":"Tentpole (XL)"},{"name":"Dutton Ranch S1 Binge Push","ch":"Push","ch_type":"push","region":"US","day":"Saturday, July 11","automated":true,"priority":""},{"name":"UFC 329 Now Stream","ch":"Push","ch_type":"push","region":"BR","day":"Saturday, July 11","automated":true,"priority":"Tentpole (XL)"},{"name":"UFC 329 Now Stream","ch":"Push","ch_type":"push","region":"LA","day":"Saturday, July 11","automated":true,"priority":"Tentpole (XL)"},{"name":"UFC 329 Now Stream","ch":"Push","ch_type":"push","region":"US","day":"Saturday, July 11","automated":true,"priority":"Tentpole (XL)"},{"name":"UFC 329 Co Main Pushes","ch":"Push","ch_type":"push","region":"US","day":"Saturday, July 11","automated":false,"priority":"Tentpole (XL)"},{"name":"UFC 329 Co Main Pushes","ch":"Push","ch_type":"push","region":"BR","day":"Saturday, July 11","automated":false,"priority":"Tentpole (XL)"},{"name":"UFC 329 Co Main Pushes","ch":"Push","ch_type":"push","region":"LA","day":"Saturday, July 11","automated":false,"priority":"Tentpole (XL)"},{"name":"UFC 329 Main Event Pushes","ch":"Push","ch_type":"push","region":"US","day":"Saturday, July 11","automated":true,"priority":"Tentpole (XL)"},{"name":"UFC 329 Main Event Pushes","ch":"Push","ch_type":"push","region":"BR","day":"Saturday, July 11","automated":true,"priority":"Tentpole (XL)"},{"name":"UFC 329 Main Event Pushes","ch":"Push","ch_type":"push","region":"LA","day":"Saturday, July 11","automated":true,"priority":"Tentpole (XL)"},{"name":"UFC 329 VOD","ch":"Push","ch_type":"push","region":"AU","day":"Sunday, July 12","automated":true,"priority":"Tentpole (XL)"},{"name":"UFC 329 VOD","ch":"Push","ch_type":"push","region":"US","day":"Sunday, July 12","automated":true,"priority":"Tentpole (XL)"},{"name":"UFC 329 VOD","ch":"Push","ch_type":"push","region":"BR","day":"Sunday, July 12","automated":true,"priority":"Tentpole (XL)"},{"name":"UFC 329 VOD","ch":"Push","ch_type":"push","region":"LA","day":"Sunday, July 12","automated":true,"priority":"Tentpole (XL)"},{"name":"The Internship","ch":"Push","ch_type":"push","region":"CA","day":"Monday, July 13","automated":true,"priority":""},{"name":"The Internship","ch":"Email","ch_type":"email","region":"FR","day":"Monday, July 13","automated":false,"priority":""},{"name":"Apple & Android Upgrade Offers - Braze Migration","ch":"RedFast","ch_type":"redfast","region":"US","day":"Monday, July 13","automated":true,"priority":""},{"name":"The Internship","ch":"Push","ch_type":"push","region":"FR","day":"Monday, July 13","automated":true,"priority":""},{"name":"The Neighborhood (PUSH Only)","ch":"Push","ch_type":"push","region":"LA","day":"Monday, July 13","automated":true,"priority":""},{"name":"The Neighborhood (PUSH Only)","ch":"Push","ch_type":"push","region":"BR","day":"Monday, July 13","automated":true,"priority":""},{"name":"Diarra from Detroit S1 Catch Up","ch":"Push","ch_type":"push","region":"US","day":"Monday, July 13","automated":true,"priority":""},{"name":"World Cup Subs ~ Coming Soon ~ Sudamericana","ch":"RedFast","ch_type":"redfast","region":"LA","day":"Tuesday, July 14","automated":true,"priority":"Tentpole (XL)"},{"name":"18 World Cup ~ Daily Tune In Pushes ~ 7/14","ch":"Push","ch_type":"push","region":"LA","day":"Tuesday, July 14","automated":true,"priority":"Tentpole (XL)"},{"name":"Trending Now","ch":"Email","ch_type":"email","region":"GSA","day":"Tuesday, July 14","automated":false,"priority":""},{"name":"Spongebob Birthday","ch":"Push","ch_type":"push","region":"IT","day":"Tuesday, July 14","automated":true,"priority":""},{"name":"Summer movies Part 1","ch":"Email","ch_type":"email","region":"IT","day":"Tuesday, July 14","automated":false,"priority":""},{"name":"Untitled Home Invasion Romance","ch":"Amazon Email","ch_type":"amazon","region":"AU","day":"Tuesday, July 14","automated":false,"priority":""},{"name":"RFY","ch":"Email","ch_type":"email","region":"AU","day":"Tuesday, July 14","automated":false,"priority":""},{"name":"RFY","ch":"Email","ch_type":"email","region":"BR","day":"Wednesday, July 15","automated":true,"priority":""},{"name":"RFY","ch":"Email","ch_type":"email","region":"LA","day":"Wednesday, July 15","automated":true,"priority":""},{"name":"19 World Cup ~ Daily Tune In Pushes ~ 7/15","ch":"Push","ch_type":"push","region":"LA","day":"Wednesday, July 15","automated":true,"priority":"Tentpole (XL)"},{"name":"UFC Cross-Watch July - Creative Update","ch":"Push","ch_type":"push","region":"US","day":"Wednesday, July 15","automated":true,"priority":""},{"name":"Everybody Loves Raymond // Fresh Prince of Bel-Air","ch":"Amazon Email","ch_type":"amazon","region":"CA","day":"Wednesday, July 15","automated":false,"priority":""},{"name":"September 5","ch":"Amazon Email","ch_type":"amazon","region":"FR","day":"Wednesday, July 15","automated":false,"priority":""},{"name":"Colpo di Sole","ch":"Amazon Email","ch_type":"amazon","region":"IT","day":"Wednesday, July 15","automated":false,"priority":""},{"name":"RFY","ch":"Email","ch_type":"email","region":"UK","day":"Thursday, July 16","automated":false,"priority":""},{"name":"RFY","ch":"Email","ch_type":"email","region":"CA","day":"Thursday, July 16","automated":false,"priority":""},{"name":"Lioness S3 Trailer","ch":"Push","ch_type":"push","region":"US","day":"Thursday, July 16","automated":true,"priority":""},{"name":"Wild Cherry S1","ch":"Amazon Email","ch_type":"amazon","region":"BR","day":"Thursday, July 16","automated":false,"priority":""},{"name":"Wild Cherry","ch":"Amazon Email","ch_type":"amazon","region":"LA","day":"Thursday, July 16","automated":false,"priority":""},{"name":"Movie Weekend","ch":"Amazon Email","ch_type":"amazon","region":"GSA","day":"Thursday, July 16","automated":false,"priority":""},{"name":"Weekly Newsletter","ch":"Email","ch_type":"email","region":"US","day":"Thursday, July 16","automated":true,"priority":""},{"name":"PUSH: In the lost lands","ch":"Push","ch_type":"push","region":"UK","day":"Friday, July 17","automated":false,"priority":""},{"name":"Off the Grid - Action/Drama movies","ch":"Email","ch_type":"email","region":"GSA","day":"Friday, July 17","automated":false,"priority":""},{"name":"Trending Now (What to watch in the weekend)","ch":"Email","ch_type":"email","region":"FR","day":"Friday, July 17","automated":false,"priority":""},{"name":"Cross","ch":"Push","ch_type":"push","region":"IT","day":"Friday, July 17","automated":false,"priority":""},{"name":"Off the Grid - Action/Drama movies","ch":"Push","ch_type":"push","region":"GSA","day":"Saturday, July 18","automated":true,"priority":""},{"name":"Cross","ch":"Email","ch_type":"email","region":"IT","day":"Saturday, July 18","automated":false,"priority":""},{"name":"20 World Cup ~ Daily Tune In Pushes ~ 7/18","ch":"Push","ch_type":"push","region":"LA","day":"Saturday, July 18","automated":true,"priority":"Tentpole (XL)"},{"name":"UFC Fight Night 7/18 Du Plessis vs. Usman","ch":"Push","ch_type":"push","region":"US","day":"Saturday, July 18","automated":true,"priority":""},{"name":"UFC Fight Night 7/18 Du Plessis vs. Usman","ch":"Push","ch_type":"push","region":"BR","day":"Saturday, July 18","automated":true,"priority":""},{"name":"UFC Fight Night 7/18","ch":"Push","ch_type":"push","region":"LA","day":"Saturday, July 18","automated":true,"priority":""},{"name":"Trending Now","ch":"Email","ch_type":"email","region":"AU","day":"Saturday, July 18","automated":true,"priority":""},{"name":"21 World Cup ~ Daily Tune In Pushes ~ 7/19","ch":"Push","ch_type":"push","region":"LA","day":"Sunday, July 19","automated":true,"priority":"Tentpole (XL)"},{"name":"The Crow Girl S2","ch":"Amazon Email","ch_type":"amazon","region":"UK","day":"Sunday, July 19","automated":false,"priority":""}];
+const ONGOING=[{"name":"Dutton Ranch Crosswatch","ch":"Email","ch_type":"email","region":"FR","day":"Monday, July 6","automated":false,"priority":""},{"name":"Dutton Ranch Crosswatch","ch":"Email","ch_type":"email","region":"GSA","day":"Monday, July 6","automated":false,"priority":""},{"name":"Dutton Ranch Crosswatch","ch":"Email","ch_type":"email","region":"IT","day":"Monday, July 6","automated":false,"priority":""},{"name":"Dutton Ranch S1 Crosswatch","ch":"Email","ch_type":"email","region":"BR","day":"Friday, July 10","automated":true,"priority":""},{"name":"Dutton Ranch S1 Crosswatch","ch":"Email","ch_type":"email","region":"LA","day":"Friday, July 10","automated":true,"priority":""}];
+
+function chClass(t){const l=(t||'').toLowerCase();if(l.includes('amazon'))return'ch-amazon';if(l.includes('push'))return'ch-push';if(l.includes('email'))return'ch-email';if(l.includes('redfast'))return'ch-redfast';return'ch-flag';}
+function chLabel(ch){if(!ch)return'No channel';if(ch.toLowerCase().includes('amazon'))return'Amazon';return ch;}
+
+function priClass(p){
+  if(!p)return null;
+  if(p==='Tentpole (XL)')return'pri pri-xl';
+  if(p==='Priority (L)')return'pri pri-l';
+  if(p==='Moderate (M)')return'pri pri-m';
+  if(p==='Specialty (S)')return'pri pri-s';
+  if(p==='Product')return'pri pri-prod';
+  if(p==='TBD')return'pri pri-tbd';
+  if(p==='NA')return'pri pri-na';
+  return null;
+}
+function priLabel(p){
+  if(!p)return'<span class="pri-none">&mdash;</span>';
+  const cls=priClass(p);
+  if(!cls)return'<span class="pri-none">&mdash;</span>';
+  return'<span class="'+cls+'">'+p+'</span>';
+}
+
+let activeRegion='ALL',activeChannel='ALL',activePri='ALL';
+
+function render(){
+  const body=document.getElementById('campaigns-body');body.innerHTML='';
+  const visible=[];
+  CAMPAIGNS.forEach((s,i)=>{
+    const rOk=activeRegion==='ALL'||s.region===activeRegion;
+    const cOk=activeChannel==='ALL'||s.ch_type===activeChannel;
+    const pOk=activePri==='ALL'||s.priority===activePri;
+    if(rOk&&cOk&&pOk)visible.push({s,i});
+  });
+  const g={};const ord=[];
+  visible.forEach(({s,i})=>{if(!g[s.day]){g[s.day]=[];ord.push(s.day);}g[s.day].push({s,i});});
+  [...new Set(ord)].forEach(day=>{
+    const sends=g[day];
+    const hd=document.createElement('div');hd.className='day-hd';
+    hd.innerHTML=day+'<span class="day-ct">'+sends.length+'</span>';body.appendChild(hd);
+    sends.forEach(({s,i})=>{
+      const row=document.createElement('div');row.className='send-row';
+      row.innerHTML='<span class="ch '+chClass(s.ch_type)+'">'+chLabel(s.ch)+'</span>'
+        +'<div class="sname">'+s.name+'</div>'
+        +priLabel(s.priority)
+        +'<span class="region-badge">'+s.region+'</span>';
+      body.appendChild(row);
+    });
+  });
+  document.getElementById('empty-campaigns').style.display=visible.length===0?'block':'none';
+  document.getElementById('kpi-total').textContent=visible.length;
+  document.getElementById('kpi-email').textContent=visible.filter(({s})=>s.ch_type==='email').length;
+  document.getElementById('kpi-push').textContent=visible.filter(({s})=>s.ch_type==='push').length;
+  document.getElementById('kpi-amazon').textContent=visible.filter(({s})=>s.ch_type==='amazon').length;
+  document.getElementById('kpi-us').textContent=visible.filter(({s})=>s.region==='US').length;
+  document.getElementById('kpi-intl').textContent=visible.filter(({s})=>s.region!=='US').length;
+  document.getElementById('sec-count').textContent=visible.length;
+}
+
+function renderOngoing(){
+  const body=document.getElementById('ongoing-body');body.innerHTML='';
+  const g={};const ord=[];
+  ONGOING.forEach(s=>{if(!g[s.day]){g[s.day]=[];ord.push(s.day);}g[s.day].push(s);});
+  [...new Set(ord)].forEach(day=>{
+    const sends=g[day];
+    const hd=document.createElement('div');hd.className='day-hd';
+    hd.innerHTML=day+'<span class="day-ct">'+sends.length+'</span>';body.appendChild(hd);
+    sends.forEach(s=>{
+      const row=document.createElement('div');row.className='send-row';
+      row.innerHTML='<span class="ch '+chClass(s.ch_type)+'">'+chLabel(s.ch)+'</span>'
+        +'<div class="sname">'+s.name+'</div>'
+        +priLabel(s.priority)
+        +'<span class="region-badge">'+s.region+'</span>';
+      body.appendChild(row);
+    });
+  });
+  document.getElementById('ongoing-count').textContent=ONGOING.length;
+}
+
+document.getElementById('region-filters').addEventListener('click',e=>{
+  if(!e.target.dataset.region)return;
+  document.querySelectorAll('#region-filters .fb').forEach(b=>b.classList.remove('active'));
+  e.target.classList.add('active');activeRegion=e.target.dataset.region;render();
+});
+document.getElementById('channel-filters').addEventListener('click',e=>{
+  if(!e.target.dataset.channel)return;
+  document.querySelectorAll('#channel-filters .fb').forEach(b=>{b.classList.remove('active','active-email','active-push','active-amazon','active-redfast');});
+  const ch=e.target.dataset.channel;activeChannel=ch;
+  e.target.classList.add(ch==='ALL'?'active':'active-'+ch);render();
+});
+document.getElementById('priority-filters').addEventListener('click',e=>{
+  if(!e.target.dataset.pri)return;
+  document.querySelectorAll('#priority-filters .fb').forEach(b=>b.classList.remove('active'));
+  e.target.classList.add('active');activePri=e.target.dataset.pri;render();
+});
+render();
+renderOngoing();
+</script>
+</body>
+</html>
