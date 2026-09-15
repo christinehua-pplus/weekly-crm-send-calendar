@@ -24,6 +24,9 @@ body{background:#e8eaf0;font-family:'Helvetica Neue',Arial,sans-serif;padding:24
 .filter-label{font-size:10px;font-weight:700;color:#000A3C;text-transform:uppercase;letter-spacing:.1em;min-width:52px;}
 .filter-group{display:flex;flex-wrap:wrap;gap:5px;}
 .fb{display:inline-block;padding:4px 10px;border-radius:3px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid #c8d0ee;background:#eef1fa;color:#000A3C;transition:all .15s;user-select:none;}
+.search-input{flex:1;max-width:320px;padding:5px 10px;border-radius:3px;font-size:12px;border:1.5px solid #c8d0ee;background:#fff;color:#000A3C;outline:none;}
+.search-input:focus{border-color:#005FFF;}
+.search-input::placeholder{color:#a8b0d0;}
 .fb:hover{background:#dde4f8;}
 .fb.active{background:#000A3C;color:#fff;border-color:#000A3C;}
 .fb.active-email{background:#005FFF;color:#fff;border-color:#005FFF;}
@@ -91,6 +94,11 @@ a.send-row{cursor:pointer;}
   <div class="kpi-cell"><div class="kpi-num accent" id="kpi-intl">136</div><div class="kpi-label">INTL sends</div></div>
 </div>
 <div class="filter-bar">
+  <div class="filter-row">
+    <span class="filter-label">Search</span>
+    <input type="text" id="search-box" class="search-input" placeholder="Search campaign names&hellip;">
+    <span class="fb" id="search-clear" style="display:none;">Clear</span>
+  </div>
   <div class="filter-row">
     <span class="filter-label">Week</span>
     <div class="filter-group" id="week-filters">
@@ -202,7 +210,7 @@ function priLabel(p){
 }
 function regionLabel(s){return s.region_label||s.region;}
 
-let activeWeek='CURRENT',activeRegion='ALL',activeChannel='ALL',activePri='ALL';
+let activeWeek='CURRENT',activeRegion='ALL',activeChannel='ALL',activePri='ALL',activeSearch='';
 
 function currentWeekStart(){
   const now=new Date();
@@ -228,7 +236,8 @@ function rowFilterOk(s){
   const cOk=activeChannel==='ALL'||s.ch_type===activeChannel;
   const pOk=activePri==='ALL'||s.priority===activePri;
   const wOk=weekOk(s);
-  return rOk&&cOk&&pOk&&wOk;
+  const sOk=activeSearch===''||s.name.toLowerCase().includes(activeSearch);
+  return rOk&&cOk&&pOk&&wOk&&sOk;
 }
 
 function matchingChips(s){
@@ -286,7 +295,7 @@ function render(){
   document.getElementById('kpi-us').textContent=usSends;
   document.getElementById('kpi-intl').textContent=totalSends-usSends;
 
-  const htVisible=HIGHTOUCH.filter(s=>weekOk(s)&&(activeChannel==='ALL'||s.ch_type===activeChannel)&&(activePri==='ALL'||s.priority===activePri));
+  const htVisible=HIGHTOUCH.filter(s=>weekOk(s)&&(activeChannel==='ALL'||s.ch_type===activeChannel)&&(activePri==='ALL'||s.priority===activePri)&&(activeSearch===''||s.name.toLowerCase().includes(activeSearch)));
   const htBody=document.getElementById('hightouch-body');
   if(htBody)renderList(htVisible,'hightouch-body','hightouch-count',null);
 
@@ -314,6 +323,17 @@ document.getElementById('priority-filters').addEventListener('click',e=>{
   if(!e.target.dataset.pri)return;
   document.querySelectorAll('#priority-filters .fb').forEach(b=>b.classList.remove('active'));
   e.target.classList.add('active');activePri=e.target.dataset.pri;render();
+});
+document.getElementById('search-box').addEventListener('input',e=>{
+  activeSearch=e.target.value.trim().toLowerCase();
+  document.getElementById('search-clear').style.display=activeSearch?'inline-block':'none';
+  render();
+});
+document.getElementById('search-clear').addEventListener('click',()=>{
+  activeSearch='';
+  document.getElementById('search-box').value='';
+  document.getElementById('search-clear').style.display='none';
+  render();
 });
 render();
 </script>
